@@ -1,4 +1,6 @@
+import { Provider } from "@/components/ui/provider";
 import type { Metadata } from "next";
+import Header from "@/components/Header"
 
 export const metadata: Metadata = {
   title: "AniChart",
@@ -11,9 +13,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
-        {children}
+        <Provider>
+          <Header />
+          {children}
+        </Provider>
       </body>
     </html>
   );

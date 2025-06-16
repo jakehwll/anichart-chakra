@@ -1,6 +1,7 @@
 import { Provider } from "@/components/ui/provider";
 import type { Metadata } from "next";
 import Header from "@/components/Header"
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "AniChart",
@@ -18,6 +19,7 @@ export default function RootLayout({
         <Provider>
           <Header />
           {children}
+          <Footer />
         </Provider>
       </body>
     </html>

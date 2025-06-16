@@ -5,8 +5,8 @@ import Link from "next/link";
 
 const Header = () => {
     return (
-        <Container paddingY={10} maxWidth={"4xl"}>
-            <Box as={"header"} height={10} width={12} position={"relative"}>
+        <Container as={"header"} paddingY={10} maxWidth={"4xl"}>
+            <Box height={10} width={12} position={"relative"}>
                 <Link href={"/"}>
                     <Image src={Logo} alt={""} fill={true} />
                 </Link>

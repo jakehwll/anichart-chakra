@@ -1,4 +1,5 @@
-import { Provider } from "@/components/ui/provider";
+import Providers from "@/components/Providers";
+import { Provider as ChakraProvider } from "@/components/ui/provider";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Provider>{children}</Provider>
+        <Providers>
+          <ChakraProvider>{children}</ChakraProvider>
+        </Providers>
       </body>
     </html>
   );

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.8",
     "@chakra-ui/react": "^3.21.0",
     "@emotion/react": "^11.14.0",
     "@hono/zod-validator": "^0.7.0",

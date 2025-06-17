@@ -10,8 +10,42 @@ export default function Home() {
   const { data } = useQuery({
     queryKey: ["series"],
     queryFn: async () => {
-      const { json } = await client.api.health.$get();
-      return json();
+      const response = await client.api.graphql.$post({
+        json: {
+          query: `
+            {
+              Page {
+                media(
+                  season: SUMMER
+                  seasonYear: 2025
+                  type: ANIME
+                  sort: FAVOURITES_DESC
+                  format: TV
+                ) {
+                  id
+                  title {
+                    english
+                    romaji
+                  }
+                  description
+                  favourites
+                  coverImage {
+                    extraLarge
+                    color
+                  }
+                  nextAiringEpisode {
+                    airingAt
+                    timeUntilAiring
+                    episode
+                  }
+                }
+              }
+            }
+          `,
+        },
+      });
+      const { data } = await response.json();
+      return data;
     },
   });
 
@@ -19,9 +53,8 @@ export default function Home() {
     <Container py={4}>
       <VStack gap={4}>
         <Box width={"full"}>
-          <Heading size={"2xl"}>TV</Heading>
+          <Heading size={"2xl"}>Series</Heading>
         </Box>
-        <Box>{JSON.stringify(data)}</Box>
         <Grid
           width={"full"}
           templateColumns="repeat(1, 1fr)"
@@ -33,8 +66,20 @@ export default function Home() {
           }}
           gap={4}
         >
-          <Series />
-          <SeriesSkeleton />
+          {!data && (
+            <>
+              {new Array(9).fill(null).map((_, i) => (
+                <SeriesSkeleton key={i} />
+              ))}
+            </>
+          )}
+          {data && (
+            <>
+              {data.Page.media.map((anime) => (
+                <Series key={anime.id} />
+              ))}
+            </>
+          )}
         </Grid>
       </VStack>
     </Container>

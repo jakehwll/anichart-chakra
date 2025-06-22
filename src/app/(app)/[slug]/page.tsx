@@ -1,5 +1,5 @@
+import { MediaSeason } from "@/__generated__/graphql";
 import Series from "@/components/Series";
-import { ANIME_SEASONS } from "@/utils/seasons";
 import { Box, Container, Heading, VStack } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 
@@ -8,15 +8,15 @@ export default async function Page({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const [season, year] = (await params).slug.split("-");
+  const [season, seasonYear] = (await params).slug.split("-");
 
   if (
     // Ensure that the season is a valid season
-    !Object.values(ANIME_SEASONS).includes(season as ANIME_SEASONS) ||
+    !Object.keys(MediaSeason).includes(season) ||
     // Ensure that the year is a set of 4 numbers.
-    !year.match(/^\d+$/) ||
+    !seasonYear.match(/^\d+$/) ||
     // Ensure that the year is above 2000.
-    parseInt(year) < 2000
+    parseInt(seasonYear) < 2000
   ) {
     return notFound();
   }
@@ -27,7 +27,10 @@ export default async function Page({
         <Box width={"full"}>
           <Heading size={"2xl"}>Series</Heading>
         </Box>
-        <Series />
+        <Series
+          season={season.toUpperCase() as MediaSeason}
+          seasonYear={2025}
+        />
       </VStack>
     </Container>
   );

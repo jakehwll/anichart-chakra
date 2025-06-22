@@ -1,13 +1,18 @@
+"use client";
+
 import { Box, Container, Flex, IconButton, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import Logo from "@/assets/logo.svg";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { BiUser } from "react-icons/bi";
 
 const CURRENT_YEAR = new Date().getFullYear();
 const SEASONS = ["Winter", "Spring", "Summer", "Fall"];
 
 const Header = () => {
+  const { push } = useRouter();
+
   return (
     <Container as={"header"} paddingY={10} maxWidth={"4xl"}>
       <Flex alignItems={"center"} justifyContent={"space-between"}>
@@ -32,7 +37,7 @@ const Header = () => {
             ))}
           </Flex>
         </Box>
-        <IconButton variant={"ghost"}>
+        <IconButton variant={"ghost"} onClick={() => push("/profile")}>
           <BiUser />
         </IconButton>
       </Flex>

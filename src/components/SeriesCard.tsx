@@ -1,5 +1,5 @@
 import { Media } from "@/__generated__/graphql";
-import { Box, Card, Heading, HStack, VStack } from "@chakra-ui/react";
+import { Box, Card, Center, Heading, HStack, VStack } from "@chakra-ui/react";
 import { AspectRatio } from "@chakra-ui/react";
 import Image from "next/image";
 import { useMemo } from "react";
@@ -31,10 +31,10 @@ const SeriesCard = ({
           roundedLeft={"md"}
           position={"relative"}
         >
-          {coverImage?.extraLarge ? (
-            <Image src={coverImage.extraLarge} alt={""} fill={true} />
+          {coverImage?.large ? (
+            <Image src={coverImage.large} alt={""} fill={true} />
           ) : (
-            <span />
+            <Center fontSize="xl">Missing</Center>
           )}
         </AspectRatio>
         <Box flex={"1"} height={"full"} position={"relative"}>

@@ -5,13 +5,14 @@ import SeriesSkeleton from "./SeriesSkeleton";
 import SeriesCard from "./SeriesCard";
 import { useQuery } from "@apollo/client";
 import { gql } from "@/__generated__";
+import { MediaSeason } from "@/__generated__/graphql";
 
 const GET_SERIES_LIST = gql(`
-  query GetSeries {
-    Page {
+  query GetSeries($season: MediaSeason, $seasonYear: Int) {
+    Page(page: 1, perPage: 12) {
       media(
-        season: SUMMER
-        seasonYear: 2025
+        season: $season
+        seasonYear: $seasonYear
         type: ANIME
         sort: FAVOURITES_DESC
         format: TV
@@ -24,7 +25,7 @@ const GET_SERIES_LIST = gql(`
         description
         favourites
         coverImage {
-          extraLarge
+          large
           color
         }
         nextAiringEpisode {
@@ -37,8 +38,20 @@ const GET_SERIES_LIST = gql(`
   }
 `);
 
-const Series = () => {
-  const { data } = useQuery(GET_SERIES_LIST, {});
+const Series = ({
+  season,
+  seasonYear,
+}: {
+  season: MediaSeason;
+  seasonYear: number;
+}) => {
+  const { data, error } = useQuery(GET_SERIES_LIST, {
+    variables: { season, seasonYear },
+  });
+
+  if (error) {
+    return <div>{error.message}</div>;
+  }
 
   return (
     <Grid

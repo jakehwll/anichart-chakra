@@ -29,14 +29,16 @@ const app = new Hono()
       "json",
       z.object({
         query: z.string(),
+        variables: z.record(z.any()).optional(),
       })
     ),
     async (c) => {
-      const { query } = c.req.valid("json");
+      const { query, variables } = c.req.valid("json");
       const graphql = await apolloClient.query({
         query: gql`
           ${query}
         `,
+        variables,
       });
 
       return c.json(graphql, 200);

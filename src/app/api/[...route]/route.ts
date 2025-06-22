@@ -47,8 +47,25 @@ const app = new Hono()
     }
   );
 
-export const GET = app.fetch;
-export const POST = app.fetch;
-export const OPTIONS = app.fetch;
+const handle = async (req: Request) => {
+  const res = await app.fetch(req);
+
+  const headers = new Headers();
+  res.headers.forEach((value, key) => {
+    headers.set(key, value);
+  });
+
+  const body = await res.text();
+
+  return new Response(body, {
+    status: res.status,
+    statusText: res.statusText,
+    headers,
+  });
+};
+
+export const GET = handle;
+export const POST = handle;
+export const OPTIONS = handle;
 
 export type AppType = typeof app;

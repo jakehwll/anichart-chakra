@@ -7,6 +7,7 @@ import {
   gql,
   InMemoryCache,
 } from "@apollo/client";
+import { cors } from "hono/cors";
 
 const ANILIST_GRAPHQL_ENDPOINT = "https://graphql.anilist.co";
 
@@ -19,6 +20,7 @@ const apolloClient = new ApolloClient({
 });
 
 const app = new Hono()
+  .use(cors())
   .basePath("/api")
   .get("/health", (c) => {
     return c.body(null, 204);

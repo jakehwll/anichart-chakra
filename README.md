@@ -19,5 +19,5 @@ bun run dev
 
 - [React](https://react.dev/) - Frontend
 - [Next.js](https://nextjs.org/) - Server-side generation and API.
-- [ChakraUI](https://chakra-ui.com/)
+- [Chakra](https://chakra-ui.com/)
 - [Bun](https://bun.sh/)

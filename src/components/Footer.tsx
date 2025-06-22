@@ -1,8 +1,6 @@
 import { Container, Flex } from "@chakra-ui/react";
 
 const Footer = () => {
-  const GITHUB_HASH = "1234abcd";
-
   return (
     <Container as={"footer"} display={"flex"}>
       <Flex
@@ -12,7 +10,7 @@ const Footer = () => {
         justifyContent={"center"}
         my={8}
       >
-        <code>{GITHUB_HASH}</code>&nbsp;— v3.5
+        v3.5
       </Flex>
     </Container>
   );

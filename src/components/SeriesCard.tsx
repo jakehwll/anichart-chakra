@@ -2,12 +2,22 @@ import { Media } from "@/__generated__/graphql";
 import { Box, Card, Heading, HStack, VStack } from "@chakra-ui/react";
 import { AspectRatio } from "@chakra-ui/react";
 import Image from "next/image";
+import { useMemo } from "react";
+import DOMPurify from "dompurify";
 
 const SeriesCard = ({
   title,
   description,
   coverImage,
 }: Pick<Media, "id" | "title" | "description" | "coverImage">) => {
+  const sanatizedDescription = useMemo(
+    () =>
+      description && {
+        __html: DOMPurify.sanitize(description),
+      },
+    [description]
+  );
+
   return (
     <Card.Root>
       <HStack>
@@ -34,7 +44,10 @@ const SeriesCard = ({
                 <Heading size={"lg"}>{title?.english ?? title?.romaji}</Heading>
                 <Heading size={"xs"}>{title?.romaji}</Heading>
               </VStack>
-              <Card.Description fontSize={"xs"}>{description}</Card.Description>
+              <Card.Description
+                fontSize={"xs"}
+                dangerouslySetInnerHTML={sanatizedDescription || undefined}
+              ></Card.Description>
             </VStack>
           </Card.Body>
         </Box>

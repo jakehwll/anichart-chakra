@@ -20,7 +20,7 @@ const apolloClient = new ApolloClient({
 });
 
 const app = new Hono()
-  .use(cors())
+  .use(cors({ origin: "*" }))
   .basePath("/api")
   .get("/health", (c) => {
     return c.body(null, 204);

@@ -4,10 +4,9 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
+const ANILIST_GRAPHQL_ENDPOINT = "https://graphql.anilist.co";
 const client = new ApolloClient({
-  uri: process.env.NEXT_PUBLIC_VERCEL_URL
-    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/graphql`
-    : "http://localhost:3000/api/graphql",
+  uri: ANILIST_GRAPHQL_ENDPOINT,
   cache: new InMemoryCache(),
 });
 

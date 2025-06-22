@@ -14,10 +14,6 @@ const app = new Hono()
     const username = getCookie(c, "anichart-username");
     const jobTitle = getCookie(c, "anichart-job-title");
 
-    if (!username || !jobTitle) {
-      return c.json({ ok: false }, 401);
-    }
-
     return c.json({
       username,
       jobTitle,

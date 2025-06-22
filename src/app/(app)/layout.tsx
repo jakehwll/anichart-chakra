@@ -1,5 +1,13 @@
+"use client";
+
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: process.env.VERCEL_URL ?? "http://localhost:3000/api/graphql",
+  cache: new InMemoryCache(),
+});
 
 export default function RootLayout({
   children,
@@ -11,7 +19,7 @@ export default function RootLayout({
   return (
     <>
       <Header />
-      {children}
+      <ApolloProvider client={client}>{children}</ApolloProvider>
       {modal}
       <Footer />
     </>

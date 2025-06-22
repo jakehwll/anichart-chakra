@@ -1,16 +1,18 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
-  overwrite: true,
   schema: "https://graphql.anilist.co",
+  documents: ["src/**/*.{ts,tsx}"],
   generates: {
-    "src/generated/graphql.ts": {
-      config: {
-        useIndexSignature: true,
+    "./src/__generated__/": {
+      preset: "client",
+      plugins: [],
+      presetConfig: {
+        gqlTagName: "gql",
       },
-      plugins: ["typescript", "typescript-resolvers"],
     },
   },
+  ignoreNoDocuments: true,
 };
 
 export default config;

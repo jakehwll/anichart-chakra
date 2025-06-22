@@ -1,53 +1,44 @@
 "use client";
 
-import { client } from "@/utils/rpc";
 import { Grid } from "@chakra-ui/react";
 import SeriesSkeleton from "./SeriesSkeleton";
 import SeriesCard from "./SeriesCard";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "@apollo/client";
+import { gql } from "@/__generated__";
+
+const GET_SERIES_LIST = gql(`
+  query GetSeries {
+    Page {
+      media(
+        season: SUMMER
+        seasonYear: 2025
+        type: ANIME
+        sort: FAVOURITES_DESC
+        format: TV
+      ) {
+        id
+        title {
+          english
+          romaji
+        }
+        description
+        favourites
+        coverImage {
+          extraLarge
+          color
+        }
+        nextAiringEpisode {
+          airingAt
+          timeUntilAiring
+          episode
+        }
+      }
+    }
+  }
+`);
 
 const Series = () => {
-  const { data } = useQuery({
-    queryKey: ["series"],
-    queryFn: async () => {
-      const response = await client.api.graphql.$post({
-        json: {
-          query: `
-                {
-                  Page {
-                    media(
-                      season: SUMMER
-                      seasonYear: 2025
-                      type: ANIME
-                      sort: FAVOURITES_DESC
-                      format: TV
-                    ) {
-                      id
-                      title {
-                        english
-                        romaji
-                      }
-                      description
-                      favourites
-                      coverImage {
-                        extraLarge
-                        color
-                      }
-                      nextAiringEpisode {
-                        airingAt
-                        timeUntilAiring
-                        episode
-                      }
-                    }
-                  }
-                }
-              `,
-        },
-      });
-      const { data } = await response.json();
-      return data;
-    },
-  });
+  const { data } = useQuery(GET_SERIES_LIST, {});
 
   return (
     <Grid
@@ -68,13 +59,7 @@ const Series = () => {
           ))}
         </>
       )}
-      {data && (
-        <>
-          {data.Page.media.map((anime) => (
-            <SeriesCard key={anime.id} />
-          ))}
-        </>
-      )}
+      {data && <>{JSON.stringify(data.Page?.media)}</>}
     </Grid>
   );
 };

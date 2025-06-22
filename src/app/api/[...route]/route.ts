@@ -7,7 +7,6 @@ import {
   gql,
   InMemoryCache,
 } from "@apollo/client";
-import { AnilistPageResponseSchema } from "@/utils/graphql";
 
 const ANILIST_GRAPHQL_ENDPOINT = "https://graphql.anilist.co";
 
@@ -40,9 +39,7 @@ const app = new Hono()
         `,
       });
 
-      const res = AnilistPageResponseSchema.parse(graphql);
-
-      return c.json(res, 200);
+      return c.json(graphql, 200);
     }
   );
 

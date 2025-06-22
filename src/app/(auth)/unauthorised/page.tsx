@@ -1,4 +1,5 @@
-import { Button, Card, Container, Field, Input, Stack } from "@chakra-ui/react";
+import Settings from "@/components/Settings";
+import { Card, Container } from "@chakra-ui/react";
 
 export default function Unauthorised() {
   return (
@@ -13,22 +14,8 @@ export default function Unauthorised() {
           </Card.Description>
         </Card.Header>
         <Card.Body gap="2">
-          <Stack gap="4" w="full">
-            <Field.Root>
-              <Field.Label>Username</Field.Label>
-              <Input />
-            </Field.Root>
-            <Field.Root>
-              <Field.Label>Job Title</Field.Label>
-              <Input />
-            </Field.Root>
-          </Stack>
+          <Settings />
         </Card.Body>
-        <Card.Footer>
-          <Button variant="subtle" width={"full"}>
-            Sign In
-          </Button>
-        </Card.Footer>
       </Card.Root>
     </Container>
   );

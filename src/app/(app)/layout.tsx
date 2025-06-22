@@ -5,7 +5,9 @@ import Header from "@/components/Header";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: process.env.VERCEL_URL ?? "http://localhost:3000/api/graphql",
+  uri: process.env.NEXT_PUBLIC_VERCEL_URL
+    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/graphql`
+    : "http://localhost:3000/api/graphql",
   cache: new InMemoryCache(),
 });
 

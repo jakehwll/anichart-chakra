@@ -59,7 +59,13 @@ const Series = () => {
           ))}
         </>
       )}
-      {data && <>{JSON.stringify(data.Page?.media)}</>}
+      {data && (
+        <>
+          {data.Page?.media?.map((media) =>
+            media !== null ? <SeriesCard key={media.id} {...media} /> : media
+          )}
+        </>
+      )}
     </Grid>
   );
 };

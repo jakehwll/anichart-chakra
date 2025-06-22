@@ -1,7 +1,13 @@
-import { Box, Card, Center, Heading, HStack, VStack } from "@chakra-ui/react";
+import { Media } from "@/__generated__/graphql";
+import { Box, Card, Heading, HStack, VStack } from "@chakra-ui/react";
 import { AspectRatio } from "@chakra-ui/react";
+import Image from "next/image";
 
-const SeriesCard = () => {
+const SeriesCard = ({
+  title,
+  description,
+  coverImage,
+}: Pick<Media, "id" | "title" | "description" | "coverImage">) => {
   return (
     <Card.Root>
       <HStack>
@@ -10,8 +16,13 @@ const SeriesCard = () => {
           ratio={37 / 53}
           width={40}
           roundedLeft={"md"}
+          position={"relative"}
         >
-          <Center fontSize="xl">TODO</Center>
+          {coverImage?.extraLarge ? (
+            <Image src={coverImage.extraLarge} alt={""} fill={true} />
+          ) : (
+            <span />
+          )}
         </AspectRatio>
         <Box flex={"1"} height={"full"} position={"relative"}>
           <Card.Body position={"absolute"} inset={0} overflowY={"auto"}>
@@ -20,18 +31,10 @@ const SeriesCard = () => {
                 <Heading size={"xs"} color={"fg.muted"}>
                   Ep 1 airing in
                 </Heading>
-                <Heading size={"lg"}>16 days, 2 hours</Heading>
-                <Heading size={"xs"}>Sequel to FooBarBaz</Heading>
+                <Heading size={"lg"}>{title?.english ?? title?.romaji}</Heading>
+                <Heading size={"xs"}>{title?.romaji}</Heading>
               </VStack>
-              <Card.Description fontSize={"xs"}>
-                {`
-              I'm baby crucifix yr squid waistcoat. Organic hoodie banjo, synth
-              aesthetic tbh squid chambray dreamcatcher pour-over. Knausgaard
-              art party kombucha four dollar toast kickstarter XOXO blackbird
-              spyplane four loko. Tbh edison bulb celiac brunch viral street
-              art.
-              `}
-              </Card.Description>
+              <Card.Description fontSize={"xs"}>{description}</Card.Description>
             </VStack>
           </Card.Body>
         </Box>

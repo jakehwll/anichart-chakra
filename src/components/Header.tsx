@@ -21,21 +21,28 @@ const Header = () => {
             <Image src={Logo} alt={""} fill={true} />
           </Link>
         </Box>
-        <Box as={"nav"}>
-          <Flex as={"ul"} alignItems={"center"} gap={8}>
-            {SEASONS.map((season) => (
-              <li key={season}>
-                <Link href={`/${season}-${CURRENT_YEAR}`}>
-                  <Flex flexDir={"column"} alignItems={"center"}>
-                    <Text fontWeight={"medium"}>{season}</Text>
-                    <Text fontWeight={"medium"} fontSize={"xs"}>
-                      {CURRENT_YEAR}
-                    </Text>
-                  </Flex>
-                </Link>
-              </li>
-            ))}
-          </Flex>
+        <Box as={"nav"} position={"relative"} flex={1} height={12}>
+          <Box position={"absolute"} inset={0} overflowX={"auto"}>
+            <Flex
+              as={"ul"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              gap={8}
+            >
+              {SEASONS.map((season) => (
+                <li key={season}>
+                  <Link href={`/${season}-${CURRENT_YEAR}`}>
+                    <Flex flexDir={"column"} alignItems={"center"}>
+                      <Text fontWeight={"medium"}>{season}</Text>
+                      <Text fontWeight={"medium"} fontSize={"xs"}>
+                        {CURRENT_YEAR}
+                      </Text>
+                    </Flex>
+                  </Link>
+                </li>
+              ))}
+            </Flex>
+          </Box>
         </Box>
         <IconButton variant={"ghost"} onClick={() => push("/profile")}>
           <BiUser />

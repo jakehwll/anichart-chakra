@@ -1,42 +1,81 @@
-import { Box, Card, Center, Heading, HStack, VStack } from "@chakra-ui/react";
-import { AspectRatio } from "@chakra-ui/react";
+"use client";
+
+import { client } from "@/utils/rpc";
+import { Grid } from "@chakra-ui/react";
+import SeriesSkeleton from "./SeriesSkeleton";
+import SeriesCard from "./SeriesCard";
+import { useQuery } from "@tanstack/react-query";
 
 const Series = () => {
+  const { data } = useQuery({
+    queryKey: ["series"],
+    queryFn: async () => {
+      const response = await client.api.graphql.$post({
+        json: {
+          query: `
+                {
+                  Page {
+                    media(
+                      season: SUMMER
+                      seasonYear: 2025
+                      type: ANIME
+                      sort: FAVOURITES_DESC
+                      format: TV
+                    ) {
+                      id
+                      title {
+                        english
+                        romaji
+                      }
+                      description
+                      favourites
+                      coverImage {
+                        extraLarge
+                        color
+                      }
+                      nextAiringEpisode {
+                        airingAt
+                        timeUntilAiring
+                        episode
+                      }
+                    }
+                  }
+                }
+              `,
+        },
+      });
+      const { data } = await response.json();
+      return data;
+    },
+  });
+
   return (
-    <Card.Root>
-      <HStack>
-        <AspectRatio
-          bg={"bg.muted"}
-          ratio={37 / 53}
-          width={40}
-          roundedLeft={"md"}
-        >
-          <Center fontSize="xl">TODO</Center>
-        </AspectRatio>
-        <Box flex={"1"} height={"full"} position={"relative"}>
-          <Card.Body position={"absolute"} inset={0} overflowY={"auto"}>
-            <VStack alignItems={"start"} gap={2}>
-              <VStack alignItems={"start"} gap={1}>
-                <Heading size={"xs"} color={"fg.muted"}>
-                  Ep 1 airing in
-                </Heading>
-                <Heading size={"lg"}>16 days, 2 hours</Heading>
-                <Heading size={"xs"}>Sequel to FooBarBaz</Heading>
-              </VStack>
-              <Card.Description fontSize={"xs"}>
-                {`
-              I'm baby crucifix yr squid waistcoat. Organic hoodie banjo, synth
-              aesthetic tbh squid chambray dreamcatcher pour-over. Knausgaard
-              art party kombucha four dollar toast kickstarter XOXO blackbird
-              spyplane four loko. Tbh edison bulb celiac brunch viral street
-              art.
-              `}
-              </Card.Description>
-            </VStack>
-          </Card.Body>
-        </Box>
-      </HStack>
-    </Card.Root>
+    <Grid
+      width={"full"}
+      templateColumns="repeat(1, 1fr)"
+      md={{
+        gridTemplateColumns: "repeat(2, 1fr)",
+      }}
+      xl={{
+        gridTemplateColumns: "repeat(3, 1fr)",
+      }}
+      gap={4}
+    >
+      {!data && (
+        <>
+          {new Array(9).fill(null).map((_, i) => (
+            <SeriesSkeleton key={i} />
+          ))}
+        </>
+      )}
+      {data && (
+        <>
+          {data.Page.media.map((anime) => (
+            <SeriesCard key={anime.id} />
+          ))}
+        </>
+      )}
+    </Grid>
   );
 };
 

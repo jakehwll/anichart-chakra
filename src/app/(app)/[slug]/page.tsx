@@ -1,4 +1,6 @@
+import Series from "@/components/Series";
 import { ANIME_SEASONS } from "@/utils/seasons";
+import { Box, Container, Heading, VStack } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 
 export default async function Page({
@@ -19,5 +21,14 @@ export default async function Page({
     return notFound();
   }
 
-  return <></>;
+  return (
+    <Container py={4}>
+      <VStack gap={4}>
+        <Box width={"full"}>
+          <Heading size={"2xl"}>Series</Heading>
+        </Box>
+        <Series />
+      </VStack>
+    </Container>
+  );
 }

@@ -5,21 +5,25 @@ export enum ANIME_SEASONS {
   FALL = "Fall",
 }
 
-export const ANIME_SEASONS_MAPPING = {
-  // JANUARY, FEBRUARY, MARCH
-  0: ANIME_SEASONS.WINTER,
-  1: ANIME_SEASONS.WINTER,
-  2: ANIME_SEASONS.WINTER,
-  // APRIL, MAY, JUNE
-  3: ANIME_SEASONS.SPRING,
-  4: ANIME_SEASONS.SPRING,
-  5: ANIME_SEASONS.SPRING,
-  // JULY, AUGUST, SEPTEMBER
-  6: ANIME_SEASONS.SUMMER,
-  7: ANIME_SEASONS.SUMMER,
-  8: ANIME_SEASONS.SUMMER,
-  // OCTOBER, NOVEMBER, DECEMBER
-  9: ANIME_SEASONS.FALL,
-  10: ANIME_SEASONS.FALL,
-  11: ANIME_SEASONS.FALL,
+export const getAnimeSeason = ({ month }: { month: number }) => {
+  switch (month) {
+    case 0:
+    case 1:
+    case 2:
+      return ANIME_SEASONS.WINTER;
+    case 3:
+    case 4:
+    case 5:
+      return ANIME_SEASONS.SPRING;
+    case 6:
+    case 7:
+    case 8:
+      return ANIME_SEASONS.SUMMER;
+    case 9:
+    case 10:
+    case 11:
+      return ANIME_SEASONS.FALL;
+    default:
+      return undefined;
+  }
 };

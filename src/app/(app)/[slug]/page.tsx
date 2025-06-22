@@ -1,5 +1,5 @@
 import { MediaSeason } from "@/__generated__/graphql";
-import Series from "@/components/Series";
+import SeriesGrid from "@/components/SeriesGrid";
 import { Box, Container, Heading, VStack } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 
@@ -27,7 +27,7 @@ export default async function Page({
         <Box width={"full"}>
           <Heading size={"2xl"}>Series</Heading>
         </Box>
-        <Series
+        <SeriesGrid
           season={season.toUpperCase() as MediaSeason}
           seasonYear={2025}
         />

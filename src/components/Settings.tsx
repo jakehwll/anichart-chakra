@@ -37,6 +37,7 @@ const Settings = ({ afterSubmit }: { afterSubmit?: () => void }) => {
     refetchOnMount: false,
   });
 
+  // This is a bad anti-pattern, I'm not particularly proud of it.
   useEffect(() => {
     if (!data) return;
     reset({

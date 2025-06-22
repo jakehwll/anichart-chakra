@@ -4,8 +4,10 @@ import { AspectRatio } from "@chakra-ui/react";
 import Image from "next/image";
 import { useMemo } from "react";
 import DOMPurify from "dompurify";
+import { Link } from "./Link";
 
 const SeriesCard = ({
+  id,
   title,
   description,
   coverImage,
@@ -19,7 +21,8 @@ const SeriesCard = ({
   );
 
   return (
-    <Card.Root>
+    <Card.Root position={"relative"}>
+      <Link href={`/anime/${id}`} position={"absolute"} inset={0} zIndex={20} />
       <HStack>
         <AspectRatio
           bg={"bg.muted"}

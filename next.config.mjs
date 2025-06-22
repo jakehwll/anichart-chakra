@@ -12,7 +12,7 @@ const nextConfig = {
     ],
   },
   experimental: {
-    optimizePackageImports: ["@chakra-ui/react"],
+    optimizePackageImports: ["@chakra-ui/react", "react-hook-form"],
   },
 };
 

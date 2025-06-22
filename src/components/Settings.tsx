@@ -3,6 +3,8 @@
 import { client } from "@/utils/rpc";
 import { Button, Field, Input, Stack } from "@chakra-ui/react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 type Inputs = {
   username: string;
@@ -14,7 +16,9 @@ const Settings = ({ afterSubmit }: { afterSubmit?: () => void }) => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<Inputs>();
+
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     client.api.auth.$post({
       json: data,
@@ -22,6 +26,28 @@ const Settings = ({ afterSubmit }: { afterSubmit?: () => void }) => {
     if (!afterSubmit) return;
     afterSubmit();
   };
+
+  const { data } = useQuery({
+    queryKey: ["auth"],
+    queryFn: async () => {
+      const response = await client.api.auth.$get({});
+      return await response.json();
+    },
+    refetchInterval: 0,
+    refetchOnMount: false,
+  });
+
+  useEffect(() => {
+    if (!data) return;
+    reset({
+      username: data.username,
+      jobTitle: data.jobTitle,
+    });
+  }, [data]);
+
+  if (!data) {
+    return null;
+  }
 
   return (
     <Stack as={"form"} gap="4" w="full" onSubmit={handleSubmit(onSubmit)}>

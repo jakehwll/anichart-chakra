@@ -1,6 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { setCookie } from "hono/cookie";
+import { getCookie, setCookie } from "hono/cookie";
 import { cors } from "hono/cors";
 import z from "zod";
 
@@ -10,24 +10,19 @@ const app = new Hono()
   .get("/health", (c) => {
     return c.body(null, 204);
   })
-  .get(
-    "/auth",
-    zValidator(
-      "cookie",
-      z.object({
-        "anichart-username": z.string(),
-        "anichart-job-title": z.string(),
-      })
-    ),
-    (c) => {
-      const cookies = c.req.valid("cookie");
+  .get("/auth", (c) => {
+    const username = getCookie(c, "anichart-username");
+    const jobTitle = getCookie(c, "anichart-job-title");
 
-      return c.json({
-        username: cookies["anichart-username"],
-        jobTitle: cookies["anichart-job-title"],
-      });
+    if (!username || !jobTitle) {
+      return c.json({ ok: false }, 401);
     }
-  )
+
+    return c.json({
+      username,
+      jobTitle,
+    });
+  })
   .post(
     "/auth",
     zValidator(

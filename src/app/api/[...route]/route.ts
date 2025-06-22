@@ -20,15 +20,7 @@ const apolloClient = new ApolloClient({
 });
 
 const app = new Hono()
-  .use(
-    cors({
-      origin: "*",
-      allowMethods: ["POST", "GET", "OPTIONS"],
-      allowHeaders: ["Content-Type", "Authorization"],
-      exposeHeaders: ["Content-Length"],
-      credentials: true,
-    })
-  )
+  .use(cors())
   .basePath("/api")
   .get("/health", (c) => {
     return c.body(null, 204);

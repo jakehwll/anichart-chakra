@@ -3,7 +3,7 @@ import { Container } from "@chakra-ui/react";
 
 export default function Page() {
   return (
-    <Container>
+    <Container width={"md"}>
       <Settings />
     </Container>
   );

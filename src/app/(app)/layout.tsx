@@ -2,13 +2,6 @@
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-
-const ANILIST_GRAPHQL_ENDPOINT = "https://graphql.anilist.co";
-const client = new ApolloClient({
-  uri: ANILIST_GRAPHQL_ENDPOINT,
-  cache: new InMemoryCache(),
-});
 
 export default function RootLayout({
   children,
@@ -20,7 +13,7 @@ export default function RootLayout({
   return (
     <>
       <Header />
-      <ApolloProvider client={client}>{children}</ApolloProvider>
+      {children}
       {modal}
       <Footer />
     </>

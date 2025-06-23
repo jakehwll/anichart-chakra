@@ -41,9 +41,6 @@ const SeriesCard = ({
           <Card.Body position={"absolute"} inset={0} overflowY={"auto"}>
             <VStack alignItems={"start"} gap={2}>
               <VStack alignItems={"start"} gap={1}>
-                <Heading size={"xs"} color={"fg.muted"}>
-                  Ep 1 airing in
-                </Heading>
                 <Heading size={"lg"}>{title?.english ?? title?.romaji}</Heading>
                 <Heading size={"xs"}>{title?.romaji}</Heading>
               </VStack>

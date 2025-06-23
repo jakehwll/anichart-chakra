@@ -14,7 +14,7 @@ import { PaginationPage } from "./PaginationCount";
 const PER_PAGE = 12;
 
 const GET_SERIES_LIST = gql(`
-  query GetSeries($season: MediaSeason, $seasonYear: Int, $page: Int, $perPage: Int) {
+  query GetSeriesList($season: MediaSeason, $seasonYear: Int, $page: Int, $perPage: Int) {
     Page(page: $page, perPage: $perPage) {
       pageInfo {
         total
@@ -32,15 +32,8 @@ const GET_SERIES_LIST = gql(`
           romaji
         }
         description
-        favourites
         coverImage {
           large
-          color
-        }
-        nextAiringEpisode {
-          airingAt
-          timeUntilAiring
-          episode
         }
       }
     }
